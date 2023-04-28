@@ -1,0 +1,48 @@
+version: '3'
+services:
+
+  database-postgres:
+    image: "postgres:latest"
+    restart: always
+    container_name: postgres-db
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - 6432:5432
+    environment:
+      POSTGRES_DB: mydb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    networks:
+        - application
+
+  application-go:
+    build: ./backend
+    container_name: app-go
+    restart: always
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+      - DATABASE_HOST=${DB_HOST}
+      - DATABASE_PORT=${DB_PORT}
+    ports:
+      - 8099:8090
+    links:
+      - database-postgres
+    networks:
+        - application
+
+  application-ui:
+    build: ./frontend
+    container_name: reactjs-ui
+    restart: always
+    ports:
+      - 3010:3000
+    links:
+      - application-go
+    networks:
+        - application
+
+volumes:
+  postgres-data:
