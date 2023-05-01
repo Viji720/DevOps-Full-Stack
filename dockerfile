@@ -6,13 +6,10 @@ RUN mkdir /app
 
 WORKDIR /app
 
-COPY .env .
-
 COPY . /app
 
 RUN go get ./...
 
-EXPOSE 8090
+EXPOSE 8080
 
-CMD [ "sh", "-c", "DB_HOST=database_postgres", "DB_USER=postgres", "DB_PASSWORD=password", "DB_NAME=mydb", "DB_PORT=5432","go", "run", "main.go" ]
-
+CMD DB_HOST=52.66.14.139 DB_USER=postgres DB_PASSWORD=password DB_NAME=mydb DB_PORT=5432 go run main.go
