@@ -12,4 +12,4 @@ RUN go get ./...
 
 EXPOSE 8080
 
-CMD DB_HOST=localhost DB_USER=postgres DB_PASSWORD=password DB_NAME=mydb DB_PORT=5432 go run main.go
+CMD DB_HOST=10.1.2.113 DB_USER=postgres DB_PASSWORD=password DB_NAME=mydb DB_PORT=5432 go run main.go
